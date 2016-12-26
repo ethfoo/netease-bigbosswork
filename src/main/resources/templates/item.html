@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<body>
+<div><h1>商品展示页面</h1></div>
+
+<div>
+    <div>image</div>
+    <div>
+        <h2 th:text="${item.title}">标题</h2>
+        <h3 th:text="${item.info}">摘要文字</h3>
+        <div><input type="number" id="num" /></div>
+        <div th:switch="${user.usertype}">
+            <div th:case=" 'BUYER'">
+                <div>
+                    <!--已购买-->
+                </div>
+                <div>
+                    <h3 th:text="${'¥' + item.price}">价格</h3>
+                    <input type="hidden" id="itemid" th:value="${item.id}" />
+                    <input type="button" value="购买" onclick="addtocart()"/>
+                    <div id="result"></div>
+                </div>
+
+            </div>
+            <div th:case=" 'SELLER'">
+                <h3 th:text="${'¥' +item.price}">价格</h3>
+                <input type="button" value="编辑"/>
+            </div>
+            <div th:case="'NOT_LOGGED_IN'">
+                <h3 th:text="${'¥' + item.price}">价格</h3>
+            </div>
+
+        </div>
+        <div><p th:text="${item.content}">全文</p> </div>
+
+
+    </div>
+
+
+</div>
+<script type="text/javascript">
+    function addtocart(){
+        $.ajax({
+            data:{
+                "itemid": $("#itemid").val(),
+                "num": $("#num").val()
+            },
+            type:"POST",
+            dataType: 'json',
+            url:"/addtocart",
+            error:function(data){
+                $("#result").html(data.msg)
+            },
+            success:function(data){
+                $("#result").html(data.msg) ;
+            }
+        });
+    }
+</script>
+
+<script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js" />
+
+</body>
+
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<body>
+<div><h1>购物车页面</h1></div>
+
+<div>
+ <body>
+    <table>
+        <tr><th>物品名称</th><th>数量</th><th>价格</th></tr>
+        <tr th:each="shoppingcartItem:${itemList}">
+            <td th:text="${shoppingcartItem.title}">商品名称</td>
+            <td><input type="number" th:value="${shoppingcartItem.num}" /></td>
+            <td th:text="${shoppingcartItem.price}">价格</td>
+        </tr>
+    </table>
+    <div>
+        <input type="button" value="退出"/>
+        <input type="button" value="购买" onclick="location.href='/buyall'"/>
+    </div>
+ </body>
+
+
+</div>
+
+
+<script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js" />
+
+</body>
+
+</html>

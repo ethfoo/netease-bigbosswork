@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ethfoo.mapper.ItemMapper">
+    <insert id="insertItem" parameterType="com.ethfoo.pojo.Item" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO item (title, image, info, content, price)
+        VALUES (#{title}, #{image}, #{info}, #{content}, #{price})
+    </insert>
+
+    <select id="selectItemById" resultType="com.ethfoo.pojo.Item" parameterType="int">
+        SELECT * FROM item WHERE id = #{id}
+    </select>
+
+
+</mapper>
