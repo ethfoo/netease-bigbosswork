@@ -6,8 +6,8 @@
 
 <div>
  <body>
-    <table>
-        <tr><th>物品名称</th><th>数量</th><th>价格</th></tr>
+    <table id="cart">
+       <!-- <tr><th>商品名称</th><th>数量</th><th>价格</th></tr>-->
         <tr th:each="shoppingcartItem:${itemList}">
             <td th:text="${shoppingcartItem.title}">商品名称</td>
             <td><input type="number" th:value="${shoppingcartItem.num}" /></td>
@@ -16,12 +16,48 @@
     </table>
     <div>
         <input type="button" value="退出"/>
-        <input type="button" value="购买" onclick="location.href='/buyall'"/>
+        <input type="button" value="购买" onclick="buyall()"/>
+        <div id="result"></div>
     </div>
  </body>
 
 
 </div>
+
+<script type="text/javascript">
+
+    function buyall(){
+        var array = new Array()
+        var table = document.getElementById("cart");
+
+        $('table tr').each(function(){
+            var tdArr = $(this).children();
+            var title = tdArr.eq(0).text();
+            var num = tdArr.eq(1).find("input").val();
+            var price = tdArr.eq(2).text();
+            var cartItem = new Object();
+            cartItem.title = title;
+            cartItem.num = num;
+            cartItem.price = price;
+            array.push(cartItem);
+        })
+        var json = JSON.stringify(array)
+        console.log(json)
+        $.ajax({
+            data: json,
+            type:"POST",
+            dataType: 'json',
+            url:"/buyall",
+            contentType : "application/json; charset=utf-8",
+            error:function(data){
+                $("#result").html(data.msg)
+            },
+            success:function(data){
+                $("#result").html(data.msg) ;
+            }
+        });
+    }
+</script>
 
 
 <script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js" />

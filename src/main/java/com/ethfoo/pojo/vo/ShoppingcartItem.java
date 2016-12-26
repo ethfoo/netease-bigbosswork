@@ -28,4 +28,13 @@ public class ShoppingcartItem {
     public void setPrice(double price) {
         this.price = price;
     }
+
+    @Override
+    public String toString() {
+        return "ShoppingcartItem{" +
+                "title='" + title + '\'' +
+                ", num='" + num + '\'' +
+                ", price='" + price + '\'' +
+                '}';
+    }
 }
