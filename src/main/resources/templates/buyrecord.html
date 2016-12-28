@@ -7,6 +7,20 @@
 <div>
 
     <body>
+    <table>
+        <tr>
+            <th>图片</th><th>商品名称</th><th>购买时间</th><th>购买数量</th><th>购买价格</th>
+        </tr>
+        <tr th:each="item:${recordlist}">
+            <td>图片</td>
+            <td th:text="${item.title}">商品名称</td>
+            <td th:text="${#dates.format(item.date, 'yyyy-MM-dd')}">购买时间</td>
+            <td th:text="${item.num}">购买数量</td>
+            <td th:text="${item.buyprice}">购买价格</td>
+        </tr>
+    </table>
+
+    <div><span>总金额：</span><h4 th:text="${totalprice}"></h4></div>
 
     </body>
 

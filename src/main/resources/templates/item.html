@@ -9,7 +9,7 @@
     <div>
         <h2 th:text="${item.title}">标题</h2>
         <h3 th:text="${item.info}">摘要文字</h3>
-        <div><input type="number" id="num" /></div>
+        <div><input type="number" id="num" value="1"/></div>
         <div th:switch="${user.usertype}">
             <div th:case=" 'BUYER'">
                 <div>

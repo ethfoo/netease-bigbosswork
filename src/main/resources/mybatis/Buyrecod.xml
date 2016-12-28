@@ -14,8 +14,8 @@
         </foreach>
     </insert>
 
-    <select id="selectAllRecord" resultType="com.ethfoo.pojo.Buyrecord">
-        SELECT * FROM buyrecord
+    <select id="selectAllRecord" resultType="com.ethfoo.pojo.vo.RecordItem">
+        SELECT title, image, date, num, buyprice FROM buyrecord, item WHERE buyrecord.id = item.id;
     </select>
 
 
