@@ -4,11 +4,20 @@ package com.ethfoo.pojo.vo;
 import java.util.Date;
 
 public class RecordItem {
+    private int itemid;
     private String title;
     private String image;
     private Date date;
     private int num;
     private double buyprice;
+
+    public int getItemid() {
+        return itemid;
+    }
+
+    public void setItemid(int itemid) {
+        this.itemid = itemid;
+    }
 
     public String getTitle() {
         return title;

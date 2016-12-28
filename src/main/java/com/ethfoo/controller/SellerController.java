@@ -4,6 +4,7 @@ import com.ethfoo.pojo.Item;
 import com.ethfoo.service.ItemService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,4 +34,22 @@ public class SellerController {
 
         return mv;
     }
+
+    @RequestMapping(value = "/edit/{id}")
+    public ModelAndView editItemPage(@PathVariable String id){
+        ModelAndView mv = new ModelAndView("edit");
+        Item item = itemService.getItemById(id);
+        mv.addObject("item", item);
+        return mv;
+    }
+
+    @RequestMapping(value = "/editItem")
+    public ModelAndView editItem(Item item){
+        System.out.println("*************item-->" + item.toString());
+        ModelAndView mv = new ModelAndView();
+        itemService.editItem(item);
+        mv.setViewName("editSuccess");
+        return mv;
+    }
+
 }

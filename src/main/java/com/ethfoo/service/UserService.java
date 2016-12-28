@@ -1,12 +1,13 @@
 package com.ethfoo.service;
 
+import com.ethfoo.Utils.UserTypeEnum;
 import com.ethfoo.pojo.User;
 
-/**
- * Created by ethfoo on 2016/12/23.
- */
+import javax.servlet.http.HttpSession;
+
 public interface UserService {
 
     User checkUserAndPasswd(String username, String password);
+    UserTypeEnum getUserLoginState(HttpSession session);
 
 }

@@ -7,6 +7,7 @@ public class Item {
     private String info;
     private String content;
     private double price;
+    private boolean record;//是否在buyrecord中有记录
 
     public Integer getId() {
         return id;
@@ -56,6 +57,14 @@ public class Item {
         this.price = price;
     }
 
+    public boolean isRecord() {
+        return record;
+    }
+
+    public void setRecord(boolean record) {
+        this.record = record;
+    }
+
     @Override
     public String toString() {
         return "Item{" +
@@ -65,6 +74,7 @@ public class Item {
                 ", info='" + info + '\'' +
                 ", content='" + content + '\'' +
                 ", price=" + price +
+                ", record=" + record +
                 '}';
     }
 }

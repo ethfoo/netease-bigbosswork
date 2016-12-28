@@ -3,6 +3,41 @@
       xmlns:th="http://www.thymeleaf.org">
     <body>
         <h1>主页</h1>
+        <div id="header">
+            <div th:switch="${usertype}">
+            <div th:case=" 'NOT_LOGGED_IN' ">
+                <a href="/login">登录</a>
+            </div>
+            <div th:case=" 'BUYER' ">
+                <p>welcome, Buyer</p>
+                <div><a href="/loginout">退出</a> </div>
+                <div><a href="/buyrecord">财务</a></div>
+                <div><a href="/shoppingcart">购物车</a></div>
+            </div>
+            <div th:case=" 'SELLER' ">
+                <p>welcome, Seller</p>
+                <div><a href="/loginout">退出</a> </div>
+                <div><a href="/public">发布</a></div>
+            </div>
+        </div>
+
+        </div>
+
+        <div id="content">
+            <div th:each="item:${itemlist}">
+                <div th:if="(${usertype} == 'BUYER') and ${item.record}">
+                    <p>已购买</p>
+                </div>
+                <div th:if="(${usertype} == 'SELLER') and ${item.record}">
+                    <p>已出售</p>
+                </div>
+
+                <div>图片</div>
+                <div><h3 th:text="${item.title}">商品标题</h3></div>
+                <div><h4 th:text="${item.price}">价格</h4> </div>
+            </div>
+
+        </div>
 
 
     </body>

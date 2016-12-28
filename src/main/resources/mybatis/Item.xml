@@ -9,6 +9,13 @@
     <select id="selectItemById" resultType="com.ethfoo.pojo.Item" parameterType="int">
         SELECT * FROM item WHERE id = #{id}
     </select>
+    <select id="selectItems" resultType="com.ethfoo.pojo.Item">
+        SELECT * FROM item
+    </select>
 
+    <update id="updateItem" parameterType="com.ethfoo.pojo.Item">
+        UPDATE item SET title = #{title}, image = #{image}, info = #{info},
+        content = #{content}, price = #{price} WHERE id = #{id}
+    </update>
 
 </mapper>
