@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ethfoo.mapper.BuyrecordMapper">
+    <insert id="insertBuyrecord" parameterType="com.ethfoo.pojo.Buyrecord" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO buyrecord (itemid, buyprice, num, date)
+        VALUES (#{itemid}, #{buyprice}, #{num}, #{date})
+    </insert>
+
+    <insert id="insertBuyrecordList" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.List">
+        INSERT INTO buyrecord (itemid, buyprice, num, date)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (#{item.itemid},#{item.buyprice},#{item.num},#{item.date})
+        </foreach>
+    </insert>
+
+    <select id="selectAllRecord" resultType="com.ethfoo.pojo.Buyrecord">
+        SELECT * FROM buyrecord
+    </select>
+
+
+</mapper>

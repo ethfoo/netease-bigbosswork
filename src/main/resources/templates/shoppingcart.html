@@ -9,6 +9,7 @@
     <table id="cart">
        <!-- <tr><th>商品名称</th><th>数量</th><th>价格</th></tr>-->
         <tr th:each="shoppingcartItem:${itemList}">
+            <td><input type="hidden" th:value="${shoppingcartItem.itemid}"/></td>
             <td th:text="${shoppingcartItem.title}">商品名称</td>
             <td><input type="number" th:value="${shoppingcartItem.num}" /></td>
             <td th:text="${shoppingcartItem.price}">价格</td>
@@ -27,22 +28,24 @@
 <script type="text/javascript">
 
     function buyall(){
-        var array = new Array()
+        var array = new Array();
         var table = document.getElementById("cart");
 
         $('table tr').each(function(){
             var tdArr = $(this).children();
-            var title = tdArr.eq(0).text();
-            var num = tdArr.eq(1).find("input").val();
-            var price = tdArr.eq(2).text();
-            var cartItem = new Object();
-            cartItem.title = title;
-            cartItem.num = num;
-            cartItem.price = price;
-            array.push(cartItem);
-        })
-        var json = JSON.stringify(array)
-        console.log(json)
+        var itemid = tdArr.eq(0).find("input").val();
+        var title = tdArr.eq(1).text();
+        var num = tdArr.eq(2).find("input").val();
+        var price = tdArr.eq(3).text();
+        var cartItem = new Object();
+        cartItem.itemid = itemid;
+        cartItem.title = title;
+        cartItem.num = num;
+        cartItem.price = price;
+        array.push(cartItem);
+    });
+        var json = JSON.stringify(array);
+        console.log(json);
         $.ajax({
             data: json,
             type:"POST",
@@ -50,10 +53,10 @@
             url:"/buyall",
             contentType : "application/json; charset=utf-8",
             error:function(data){
-                $("#result").html(data.msg)
+                $("#result").html(data.msg);
             },
             success:function(data){
-                $("#result").html(data.msg) ;
+                $("#result").html(data.msg);
             }
         });
     }

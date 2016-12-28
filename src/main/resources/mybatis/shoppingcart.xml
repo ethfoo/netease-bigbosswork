@@ -18,7 +18,11 @@
     </delete>
 
     <select id="selectAllItem" resultType="com.ethfoo.pojo.vo.ShoppingcartItem">
-        SELECT title, num, price FROM shoppingcart, item WHERE shoppingcart.itemid = item.id;
+        SELECT item.id as itemid, title, num, price FROM shoppingcart, item WHERE shoppingcart.itemid = item.id;
     </select>
+
+    <delete id="truncateCart">
+        truncate TABLE shoppingcart
+    </delete>
 
 </mapper>

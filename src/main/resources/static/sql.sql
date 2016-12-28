@@ -13,3 +13,13 @@ CREATE TABLE `bigboss`.`shoppingcart` (
   `num` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `itemid_UNIQUE` (`itemid` ASC));
+
+CREATE TABLE `bigboss`.`buyrecord` (
+  `id` INT NOT NULL auto_increment,
+  `itemid` INT NULL,
+  `buyprice` DOUBLE NULL,
+  `num` INT NULL,
+  `date` DATE NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `itemid_UNIQUE` (`itemid` ASC));
+

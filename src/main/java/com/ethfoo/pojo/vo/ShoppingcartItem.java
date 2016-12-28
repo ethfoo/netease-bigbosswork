@@ -1,9 +1,18 @@
 package com.ethfoo.pojo.vo;
 
 public class ShoppingcartItem {
+    private int itemid;
     private String title;
     private int num;
     private double price;
+
+    public int getItemid() {
+        return itemid;
+    }
+
+    public void setItemid(int itemid) {
+        this.itemid = itemid;
+    }
 
     public String getTitle() {
         return title;

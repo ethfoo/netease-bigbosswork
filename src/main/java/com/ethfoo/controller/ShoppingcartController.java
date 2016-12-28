@@ -1,6 +1,7 @@
 package com.ethfoo.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.ethfoo.pojo.Buyrecord;
 import com.ethfoo.pojo.Shoppingcart;
 import com.ethfoo.pojo.vo.ShoppingcartItem;
 import com.ethfoo.service.ShoppingcartService;
@@ -17,16 +18,27 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 public class ShoppingcartController {
     @Autowired
     private ShoppingcartService shoppingcartService;
 
+    /*
+    购物车显示页面
+     */
+    @RequestMapping(value = "/shoppingcart")
+    public ModelAndView shoppingcartPage(){
+        ModelAndView mv = new ModelAndView("shoppingcart");
+        List<ShoppingcartItem> itemList = shoppingcartService.getCartList();
+        mv.addObject("itemList", itemList);
+        return mv;
+    }
+
+    /*
+    加入购物车
+     */
     @RequestMapping(value = "/addtocart")
     public Map<String, Object> addtocart(Shoppingcart shoppingcart){
         Map<String, Object> map = new HashMap<>();
@@ -40,24 +52,17 @@ public class ShoppingcartController {
         return map;
     }
 
-    @RequestMapping(value = "/shoppingcart")
-    public ModelAndView shoppingcartPage(){
-        ModelAndView mv = new ModelAndView("shoppingcart");
-        List<ShoppingcartItem> itemList = shoppingcartService.getCartList();
-        mv.addObject("itemList", itemList);
-        return mv;
-    }
-
+    /*
+    购买购物车中的所有商品
+     */
     @RequestMapping(value = "/buyall", method = RequestMethod.POST)
     public Map<String, Object> buyall(@RequestBody ShoppingcartItem[] shoppingcartItems) throws IOException {
         Map<String, Object> map = new HashMap<>();
-        for (ShoppingcartItem item : shoppingcartItems){
-            System.out.println("**********" + item.toString());
-        }
 
-        //List<ShoppingcartItem> list = JSON.parseArray(shoppingcartItem, ShoppingcartItem.class);
+        List<ShoppingcartItem> list = new ArrayList<>();
+        Collections.addAll(list, shoppingcartItems);
+        shoppingcartService.buyCartItems(list);
 
-        //System.out.println("***********" + list.toString());
         map.put("msg", "成功");
         return map;
     }

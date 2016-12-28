@@ -12,4 +12,5 @@ public interface ShoppingcartMapper {
     int updateItemNum(Shoppingcart shoppingcart);
     int deleteItem(int itemid);
     List<ShoppingcartItem> selectAllItem();
+    int truncateCart();
 }
