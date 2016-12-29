@@ -10,5 +10,6 @@ public interface ItemService {
     Item getItemById(String id);//通过商品id获取商品信息
     int editItem(Item item);
     List<Item> getAllItemsWithRecord();
+    boolean isRecord(int itemid);
 
 }

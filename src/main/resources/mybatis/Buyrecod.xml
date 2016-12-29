@@ -15,9 +15,11 @@
     </insert>
 
     <select id="selectAllRecord" resultType="com.ethfoo.pojo.vo.RecordItem">
-        SELECT itemid, title, image, date, num, buyprice FROM buyrecord, item WHERE buyrecord.id = item.id;
+        SELECT itemid, title, image, date, num, buyprice FROM buyrecord, item WHERE buyrecord.itemid = item.id;
     </select>
-
+    <select id="selectByItemid" parameterType="int" resultType="com.ethfoo.pojo.Buyrecord">
+        SELECT * FROM  buyrecord WHERE itemid = #{itemid}
+    </select>
 
 
 </mapper>

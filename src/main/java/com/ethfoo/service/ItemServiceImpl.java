@@ -50,6 +50,12 @@ public class ItemServiceImpl implements ItemService {
         return items;
     }
 
+    @Override
+    public boolean isRecord(int itemid) {
+        List<RecordItem> buyrecords = buyrecordMapper.selectAllRecord();
+        return checkExist(buyrecords,itemid);
+    }
+
     private boolean checkExist(List<RecordItem> buyrecords, int id){
         boolean flag = false;
         for(RecordItem item : buyrecords){

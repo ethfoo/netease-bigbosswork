@@ -4,6 +4,7 @@ import com.ethfoo.Utils.Const;
 import com.ethfoo.pojo.User;
 import com.ethfoo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnSingleCandidate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,5 +43,14 @@ public class LoginController {
 
         return mv;
     }
+    @RequestMapping(value = "/logout")
+    public ModelAndView logout(HttpSession session){
+        ModelAndView mv = new ModelAndView("login");
+        if(  session.getAttribute(Const.SESSION_USER)!= null ){
+            session.removeAttribute(Const.SESSION_USER);
+        }
+        return mv;
+    }
+
 
 }

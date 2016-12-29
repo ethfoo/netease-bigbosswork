@@ -28,4 +28,9 @@ public class BuyrecordServiceImpl implements BuyrecordService {
         }
         return sum;
     }
+
+    @Override
+    public Buyrecord getBuyRecordByItemid(int itemid) {
+        return buyrecordMapper.selectByItemid(itemid);
+    }
 }

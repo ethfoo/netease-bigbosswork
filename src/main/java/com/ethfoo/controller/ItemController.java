@@ -2,8 +2,10 @@ package com.ethfoo.controller;
 
 import com.ethfoo.Utils.Const;
 import com.ethfoo.Utils.UserTypeConst;
+import com.ethfoo.pojo.Buyrecord;
 import com.ethfoo.pojo.Item;
 import com.ethfoo.pojo.User;
+import com.ethfoo.service.BuyrecordService;
 import com.ethfoo.service.ItemService;
 import org.apache.catalina.startup.UserConfig;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,8 @@ public class ItemController {
 
     @Autowired
     private ItemService itemService;
+    @Autowired
+    private BuyrecordService buyrecordService;
 
     /**
      * 单个商品展示页
@@ -34,7 +38,15 @@ public class ItemController {
         }
         mv.addObject("user", user);
 
-        //TODO 加入判断商品是否购买过以及购买当时的价格
+        //判断商品是否购买过以及购买当时的价格
+        boolean isRecord = itemService.isRecord(Integer.parseInt(id));
+        if( isRecord ){
+            Buyrecord buyrecord = buyrecordService.getBuyRecordByItemid(Integer.parseInt(id));
+            double buyprice = buyrecord.getBuyprice();
+            mv.addObject("buyprice", buyprice);
+        }
+        mv.addObject("isrecord", isRecord);
+
 
         Item item = itemService.getItemById(id);
         mv.addObject("item", item);

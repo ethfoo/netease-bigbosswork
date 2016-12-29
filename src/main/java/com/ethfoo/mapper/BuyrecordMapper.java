@@ -10,4 +10,5 @@ public interface BuyrecordMapper {
     int insertBuyrecord(Buyrecord buyrecord);
     int insertBuyrecordList(List<Buyrecord> buyrecords);
     List<RecordItem> selectAllRecord();
+    Buyrecord selectByItemid(int itemid);
 }

@@ -10,13 +10,13 @@
             </div>
             <div th:case=" 'BUYER' ">
                 <p>welcome, Buyer</p>
-                <div><a href="/loginout">退出</a> </div>
+                <div><a href="/logout">退出</a> </div>
                 <div><a href="/buyrecord">财务</a></div>
                 <div><a href="/shoppingcart">购物车</a></div>
             </div>
             <div th:case=" 'SELLER' ">
                 <p>welcome, Seller</p>
-                <div><a href="/loginout">退出</a> </div>
+                <div><a href="/logout">退出</a> </div>
                 <div><a href="/public">发布</a></div>
             </div>
         </div>
@@ -33,7 +33,7 @@
                 </div>
 
                 <div>图片</div>
-                <div><h3 th:text="${item.title}">商品标题</h3></div>
+                <div><a th:text="${item.title}" th:href="@{'/item/' + ${item.id}}">商品标题</a></div>
                 <div><h4 th:text="${item.price}">价格</h4> </div>
             </div>
 

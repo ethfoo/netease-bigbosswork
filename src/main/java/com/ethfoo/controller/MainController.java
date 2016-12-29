@@ -24,9 +24,7 @@ public class MainController {
         UserTypeEnum typeEnum = userService.getUserLoginState(session);
 
         List<Item> itemList = itemService.getAllItemsWithRecord();
-        for(Item item : itemList){
-            System.out.println(item.toString());
-        }
+
         mv.addObject("usertype", typeEnum.toString());
         mv.addObject("itemlist", itemList);
         return mv;
