@@ -1,45 +1,111 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-    <body>
-        <h1>主页</h1>
-        <div id="header">
-            <div th:switch="${usertype}">
-            <div th:case=" 'NOT_LOGGED_IN' ">
-                <a href="/login">登录</a>
-            </div>
-            <div th:case=" 'BUYER' ">
-                <p>welcome, Buyer</p>
-                <div><a href="/logout">退出</a> </div>
-                <div><a href="/buyrecord">财务</a></div>
-                <div><a href="/shoppingcart">购物车</a></div>
-            </div>
-            <div th:case=" 'SELLER' ">
-                <p>welcome, Seller</p>
-                <div><a href="/logout">退出</a> </div>
-                <div><a href="/public">发布</a></div>
-            </div>
+<body>
+<h1>主页</h1>
+<div id="header">
+    <div th:switch="${usertype}">
+        <div th:case=" 'NOT_LOGGED_IN' ">
+            <a href="/login">登录</a>
         </div>
-
+        <div th:case=" 'BUYER' ">
+            <p>welcome, Buyer</p>
+            <div><a href="/logout">退出</a></div>
+            <div><a href="/buyrecord">财务</a></div>
+            <div><a href="/shoppingcart">购物车</a></div>
         </div>
+        <div th:case=" 'SELLER' ">
+            <p>welcome, Seller</p>
+            <div><a href="/logout">退出</a></div>
+            <div><a href="/public">发布</a></div>
+        </div>
+    </div>
 
-        <div id="content">
+</div>
+
+<div id="content">
+    <div th:if="${usertype} == 'NOT_LOGGED_IN'">
+        <div th:each="item:${itemlist}">
+            <div>图片</div>
+            <div><a th:text="${item.title}" th:href="@{'/item/' + ${item.id}}">商品标题</a></div>
+            <div><h4 th:text="${item.price}">价格</h4></div>
+        </div>
+    </div>
+
+    <div th:if=" ${usertype} == 'BUYER' ">
+        <div>
+            <h3 id="btn-allcontent">所有内容</h3>
+            <h3 id="btn-onlyrecord">未购买的内容</h3>
+        </div>
+        <div id="allcontent">
             <div th:each="item:${itemlist}">
-                <div th:if="(${usertype} == 'BUYER') and ${item.record}">
+                <div th:if="${item.record}">
                     <p>已购买</p>
                 </div>
-                <div th:if="(${usertype} == 'SELLER') and ${item.record}">
-                    <p>已出售</p>
+                <div>
+                    <div>图片</div>
+                    <div><a th:text="${item.title}" th:href="@{'/item/' + ${item.id}}">商品标题</a></div>
+                    <div><h4 th:text="${item.price}">价格</h4></div>
                 </div>
-
-                <div>图片</div>
-                <div><a th:text="${item.title}" th:href="@{'/item/' + ${item.id}}">商品标题</a></div>
-                <div><h4 th:text="${item.price}">价格</h4> </div>
+            </div>
+        </div>
+        <div id="onlyrecord">
+            <div th:each="item:${itemlist}">
+                <div th:if="!${item.record}">
+                    <div>图片</div>
+                    <div><a th:text="${item.title}" th:href="@{'/item/' + ${item.id}}">商品标题</a></div>
+                    <div><h4 th:text="${item.price}">价格</h4></div>
+                </div>
             </div>
 
         </div>
 
+    </div>
 
-    </body>
+    <div th:if="(${usertype} == 'SELLER') ">
+        <div th:each="item:${itemlist}" class="seller">
+
+            <div th:if="${item.record}">
+                <p>已出售<span th:text="${item.recordcnt}"></span>个</p>
+            </div>
+            <div>图片</div>
+            <div><a th:text="${item.title}" th:href="@{'/item/' + ${item.id}}">商品标题</a></div>
+            <div><h4 th:text="${item.price}">价格</h4></div>
+            <a th:href="@{'/delete/' + ${item.id}}" class="delete"><input type="button" value="删除"/></a>
+
+        </div>
+    </div>
+
+
+</div>
+
+<script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"/>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#onlyrecord").hide()
+        $(".delete").hide()
+        $("#btn-allcontent").click(function () {
+            $("#allcontent").show()
+            $("#onlyrecord").hide()
+        })
+        $("#btn-onlyrecord").click(function () {
+            $("#allcontent").hide()
+            $("#onlyrecord").show()
+        })
+
+        $(".seller").mouseover(function () {
+            $(this).children("a").show()
+
+        })
+        $(".seller").mouseout(function () {
+            $(this).children("a").hide()
+        })
+
+
+    })
+
+
+</script>
+</body>
 
 </html>

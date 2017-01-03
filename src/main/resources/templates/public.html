@@ -1,35 +1,93 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js" />
+    <script type="text/javascript">
+        $(document).ready(function () {
+            console.log("ready")
+            $("#divupload").hide()
+            $("#rdimgurl").click(function () {
+                $("#divimgurl").show()
+                $("#divupload").hide()
+            })
+            $("#rdupload").click(function () {
+                $("#divimgurl").hide()
+                $("#divupload").show()
+            })
+        })
+
+        function publicItem() {
+            console.log("publicItem")
+            var formData = new FormData();
+            formData.append("title", $("#title").val())
+            formData.append("info", $("#info").val())
+            formData.append("imageurl", $("#imageurl").val())
+            formData.append("content", $("#content").val())
+            formData.append("price", $("#price").val())
+            formData.append("file", document.getElementById("uploadfile").files[0])
+            formData.enctype = "multipart/form-data";
+
+            $.ajax({
+                url:"/publicItem",
+                type:"POST",
+                data:formData,
+                contentType:false,
+                processData:false,
+                success:function (data) {
+                    $("#result").html(data.msg)
+                },
+                error:function (data) {
+                    $("#result").html(data.msg)
+                }
+            })
+
+        }
+
+    </script>
+</head>
 <body>
 <div><h1>发布页面</h1></div>
 
 <div>
-    <form action="/publicItem" method="post">
         <div>
-            <label>标题：</label><input type="text" name="title"/>
+            <label>标题：</label><input type="text" name="title" id="title"/>
         </div>
         <div>
-            <label>摘要：</label><input type="text" name="info"/>
+            <label>摘要：</label><input type="text" name="info" id="info"/>
         </div>
         <div>
-            <label>图片url:</label><input type="text" name="image"/>
+                <label>图片:</label>
+                <input id="rdimgurl" type="radio" name="image" checked="checked"/>图片地址
+                <input id="rdupload" type="radio" name="image"/>本地上传
+                <div id="divimgurl">
+                    <input type="text" name="imageurl" id="imageurl"/>
+                </div>
+                <div id="divupload">
+                     选择文件:<input type="file" id="uploadfile"/>
+                </div>
         </div>
         <div>
-            <label>正文：</label><input type="text" name="content"/>
+            <label>正文：</label><input type="text" name="content" id="content"/>
         </div>
         <div>
-            <label>价格：</label><input type="text" name="price"/><span>元</span>
+            <label>价格：</label><input type="text" name="price" id="price"/><span>元</span>
         </div>
         <div>
-            <input type="submit" value="发布" />
+            <input type="button" value="发布" onclick="publicItem()"/>
         </div>
 
-    </form>
+        <div id="result"></div>
+
+
 
 
 </div>
 
 </body>
+
+
+
 
 </html>

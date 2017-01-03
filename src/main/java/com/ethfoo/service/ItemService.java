@@ -11,5 +11,6 @@ public interface ItemService {
     int editItem(Item item);
     List<Item> getAllItemsWithRecord();
     boolean isRecord(int itemid);
+    int deleteItem(int itemid);
 
 }

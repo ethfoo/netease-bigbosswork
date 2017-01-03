@@ -10,4 +10,5 @@ public interface ItemMapper {
     Item selectItemById(int id);
     List<Item> selectItems();
     int updateItem(Item item);
+    int deleteItem(int id);
 }

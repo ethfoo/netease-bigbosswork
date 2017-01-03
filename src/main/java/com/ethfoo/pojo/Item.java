@@ -8,6 +8,7 @@ public class Item {
     private String content;
     private double price;
     private boolean record;//是否在buyrecord中有记录
+    private Integer recordcnt; //有记录的数量
 
     public Integer getId() {
         return id;
@@ -65,6 +66,14 @@ public class Item {
         this.record = record;
     }
 
+    public Integer getRecordcnt() {
+        return recordcnt;
+    }
+
+    public void setRecordcnt(Integer recordcnt) {
+        this.recordcnt = recordcnt;
+    }
+
     @Override
     public String toString() {
         return "Item{" +
@@ -75,6 +84,7 @@ public class Item {
                 ", content='" + content + '\'' +
                 ", price=" + price +
                 ", record=" + record +
+                ", recordcnt=" + recordcnt +
                 '}';
     }
 }

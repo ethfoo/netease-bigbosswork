@@ -41,8 +41,10 @@ public class ItemServiceImpl implements ItemService {
         List<Item> items = itemMapper.selectItems();
         List<RecordItem> buyrecords = buyrecordMapper.selectAllRecord();
         for( Item item : items ){
-            if(  checkExist(buyrecords, item.getId()) ){
+            int cnt = checkExist(buyrecords, item.getId());
+            if(  cnt >0 ){
                 item.setRecord(true);
+                item.setRecordcnt(cnt);
             }else {
                 item.setRecord(false);
             }
@@ -53,16 +55,25 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public boolean isRecord(int itemid) {
         List<RecordItem> buyrecords = buyrecordMapper.selectAllRecord();
-        return checkExist(buyrecords,itemid);
+        return (checkExist(buyrecords,itemid)>0)?true:false;
     }
 
-    private boolean checkExist(List<RecordItem> buyrecords, int id){
-        boolean flag = false;
+    @Override
+    public int deleteItem(int itemid) {
+        return itemMapper.deleteItem(itemid);
+    }
+
+    /*
+    return 0: not exist
+           >0: exit count
+     */
+    private int checkExist(List<RecordItem> buyrecords, int id){
+        int count = 0;
         for(RecordItem item : buyrecords){
             if( item.getItemid() == id ){
-                flag = true;
+                count = item.getNum();
             }
         }
-        return flag;
+        return count;
     }
 }
